@@ -1,1 +1,3 @@
-[Paste number]
+[Delete this then paste your number list]
+[Fortmat number (example: 8123456789)]
+[Indonesian number only]
