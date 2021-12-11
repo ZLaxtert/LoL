@@ -15,7 +15,5 @@
     $ php call.php
 
 ## Screenshot
-<img src="img/bg.jpg">
+<img src="img/call.jpg">
 
-## Result
-<img src="img/result.jpg">
