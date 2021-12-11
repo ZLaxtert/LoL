@@ -17,3 +17,6 @@
 ## Screenshot
 <img src="img/call.jpg">
 
+## NOTE
+Paste the numbers list in the file (no.txt)
+
