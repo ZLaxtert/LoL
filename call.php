@@ -7,7 +7,7 @@ echo banner();
 echo " [?] Lanjutkan (Y/n) >> ";
 $n = trim(fgets(STDIN));
 $next = strtolower($n);
-if($next == 'n') exit("\n  [!] BUTA LU YA ? [!]\n\n");
+if($next == 'n') exit("\n  [!] LABIL LU !? [!]\n\n");
 
 //input nomor
 $no = array_unique(explode("\n",str_replace("\r","",file_get_contents("no.txt"))));
@@ -68,7 +68,7 @@ foreach ($no as $nomor){
             exit();
         }else{
             $f++;
-            echo "====================================\n[!] Failed call to 0$nomor [!]\n====================================\n";
+            echo "====================================\n[!] Error call to 0$nomor [!]\n====================================\n";
             echo $ok;
         }
    }
@@ -111,7 +111,7 @@ function banner(){
   Version  : 1.2.0
   Date Now : $date
 ------------------------------------------------------ 
-    [*] Note: Limit 1/nomor delay 10 sec/nomor [*]
+    [*] Note: Limit 1/number delay 10 sec/number [*]
 
 ";  
     return $banner;
