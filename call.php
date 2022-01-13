@@ -6,73 +6,72 @@ system("clear");
 echo banner();
 echo " [?] Lanjutkan (Y/n) >> ";
 $n = trim(fgets(STDIN));
-$next = strtolower($n);
-if($next == 'n') exit("\n  [!] LABIL LU !? [!]\n\n");
+$n = strtolower($n);
+if($n == 'n') exit("\n  [!] LABIL LU !? [!]\n\n");
 
-//input nomor
+//list nomor
 $no = array_unique(explode("\n",str_replace("\r","",file_get_contents("no.txt"))));
 
+jumlah:
 echo " [?] [MAX 20] Jumlah >> ";
 $jumlah = trim(fgets(STDIN));
 if($jumlah > 20){
-    exit("\n  [!] MAX 20, BUTA LU YA ? [!]\n\n");
+    echo "\n\n[!] MAX 20, BUTA LU YA ? [!]\n\n";
+    goto jumlah;
 }else{
-echo "\n\n";
+    echo "\n\n";
 
-//count 
-$s = 0;
-$f = 0;
-$l = 0;
-$total = count($no);
-echo "[!] Total $total nomor [!]\n\n";
+    //count 
+    $s = 0;
+    $f = 0;
+    $l = 0;
+    $total = count($no);
+    echo " [!] Total $total nomor [!]\n\n";
 
-//looping
+    //looping
 
-for ($i = 0; $i < $jumlah; $i++) {
-
-foreach ($no as $nomor){
-   
-   global $nomor;
-   
-   for ($i = 0; $i < 1; $i++) {
+    for ($i = 0; $i < $jumlah; $i++) {
+        foreach ($no as $nomor){
+            for ($i = 0; $i < 1; $i++) {
     
-        //delay1
-        sleep(1);
+                //delay1
+                sleep(1);
 
-        //api
+                //api
+                $url = "https://api.banditcoding.xyz/prank/bomcall/?no=$nomor";
+                //curl
      
-        $url = "https://api.banditcoding.xyz/prank/bomcall/?no=$nomor";
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'content-type: application/json',
+                'accept: application/json, text/plain, */*'));
+                $ok = curl_exec($ch);
+                curl_close($ch);
      
-        //curl
+                //response
      
-        $ch = curl_init();
-           curl_setopt($ch, CURLOPT_URL, $url);
-           curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-           curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-           curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'content-type: application/json',
-            'accept: application/json, text/plain, */*'));
-        $ok = curl_exec($ch);
-        curl_close($ch);
-     
-        //response
-     
-        if(strpos($ok, '"msg":"success call to 0'.$nomor.'"')){
-            $s++; 
-            echo "====================================\n[!] Success call to 0$nomor [!]\n====================================\n";
-        }elseif(strpos($ok, '"msg":"failed call to 0'.$nomor.'"')){
-            $l++;
-            echo "====================================\n[!] Limit call to 0$nomor [!]\n====================================\n";
-        }elseif(strpos($ok, '"msg":"invalid parameter"')){
-            echo "\n\n[!] INVALID PARAMETER [!]\n\n";
-            exit();
-        }else{
-            $f++;
-            echo "====================================\n[!] Error call to 0$nomor [!]\n====================================\n";
-            echo $ok;
+                if(strpos($ok, '"msg":"success call to 0'.$nomor.'"')){
+                    $s++; 
+                    echo "[".jam()."] Success call to 0$nomor".PHP_EOL;
+                }elseif(strpos($ok, '"msg":"failed call to 0'.$nomor.'"')){
+                    $l++;
+                    echo "[".jam()."] Limit call to 0$nomor".PHP_EOL;
+                }elseif(strpos($ok, '"msg":"invalid parameter"')){
+                    echo "\n\n[!] INVALID PARAMETER [!]\n\n";
+                    exit();
+                }else{
+                    $f++;
+                    echo "[".jam()."] Error call to 0$nomor".PHP_EOL;
+                }
+            }
+            //delay2
+            sleep(10);
         }
-   }
-   
+    }
+}
 //result
 echo "
           ______________
@@ -83,17 +82,7 @@ echo "
    [-] Error call $f X       [-]
    ============================
        [!] Delay 10 sec [!]
-    [!] CTRL + Z for exit [!]
-
-";
-
-//delay2
-sleep(10);
-
-}
-
-}
-}
+    [!] CTRL + Z for exit [!]\n";
 
 
 function banner(){
@@ -115,4 +104,9 @@ function banner(){
 
 ";  
     return $banner;
+}
+function jam(){
+    date_default_timezone_set("Asia/Jakarta");
+    $jam = date("H:m:s");
+    return $jam;
 }
